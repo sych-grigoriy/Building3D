@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Building3D.MainPage"
+             BackgroundColor="Black"
+             Title="3D-модель здания">
+
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Black" />
+            <Setter Property="TextColor" Value="#26FF59" />
+            <Setter Property="BorderColor" Value="#26FF59" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="Margin" Value="0,0,8,8" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#26FF59" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style x:Key="SectionHeader" TargetType="Label">
+            <Setter Property="TextColor" Value="#1A8C35" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="CharacterSpacing" Value="2" />
+            <Setter Property="Margin" Value="0,4,0,0" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+
+        <GraphicsView x:Name="Scene" Grid.Row="0" />
+
+        <!-- ===== Карточка сотрудника ===== -->
+        <Border x:Name="Card" Grid.Row="0" IsVisible="False"
+                HorizontalOptions="End" VerticalOptions="Start"
+                Margin="12" WidthRequest="370" Padding="14"
+                BackgroundColor="#F0000000" Stroke="#26FF59" StrokeThickness="1.5">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="6" />
+            </Border.StrokeShape>
+
+            <ScrollView>
+                <VerticalStackLayout Spacing="8">
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="КАРТОЧКА СОТРУДНИКА" Style="{StaticResource SectionHeader}" Margin="0" />
+                        <Button Grid.Column="1" Text="✕" Clicked="OnCloseCardClicked"
+                                Margin="0" Padding="10,2" FontSize="13" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="112,*" ColumnSpacing="12">
+                        <Border Stroke="#1A8C35" StrokeThickness="1" Padding="0" HeightRequest="134"
+                                BackgroundColor="Black">
+                            <Grid>
+                                <Image x:Name="PhotoImage" Aspect="AspectFill" IsVisible="False" />
+                                <GraphicsView x:Name="AvatarView" BackgroundColor="Transparent" />
+                            </Grid>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label x:Name="LastNameLabel" FontSize="20" FontAttributes="Bold" />
+                            <Label x:Name="FirstNameLabel" FontSize="15" />
+                            <Label x:Name="PositionLabel" FontSize="13" TextColor="#9CFFB3" Margin="0,6,0,0" />
+                            <Label x:Name="TabLabel" FontSize="11" TextColor="#1A8C35" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="#1A8C35" />
+
+                    <Label Text="МЕСТОПОЛОЖЕНИЕ" Style="{StaticResource SectionHeader}" />
+                    <Label x:Name="LocationLabel" FontSize="14" />
+
+                    <Label Text="ИНСТРУМЕНТ НА РУКАХ" Style="{StaticResource SectionHeader}" />
+                    <VerticalStackLayout x:Name="ToolsList" Spacing="2" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="СРЕДСТВА ИНДИВИДУАЛЬНОЙ ЗАЩИТЫ" Style="{StaticResource SectionHeader}" />
+                        <Label x:Name="PpeCountLabel" Grid.Column="1" FontSize="11" />
+                    </Grid>
+                    <VerticalStackLayout x:Name="PpeList" Spacing="2" />
+
+                    <Border x:Name="StatusBox" Padding="10,6" Margin="0,6,0,0" StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="4" />
+                        </Border.StrokeShape>
+                        <Label x:Name="StatusLabel" FontSize="13" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center" />
+                    </Border>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+
+        <!-- ===== Панель управления ===== -->
+        <VerticalStackLayout Grid.Row="1" Padding="12,10" BackgroundColor="#050505">
+            <FlexLayout Wrap="Wrap">
+                <Button Text="Спереди"     Clicked="OnFrontClicked" />
+                <Button Text="Сбоку"       Clicked="OnSideClicked" />
+                <Button Text="Сзади"       Clicked="OnBackClicked" />
+                <Button Text="Сверху"      Clicked="OnTopClicked" />
+                <Button Text="Изометрия"   Clicked="OnIsoClicked" />
+                <Button Text="Новые сотрудники" Clicked="OnShuffleClicked" />
+            </FlexLayout>
+
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
+                <Label Text="Масштаб" />
+                <Slider x:Name="ZoomSlider" Grid.Column="1"
+                        Minimum="0.3" Maximum="5" Value="1"
+                        MinimumTrackColor="#26FF59" ThumbColor="#26FF59"
+                        ValueChanged="OnZoomChanged" />
+                <Label Grid.Column="2" Text="Авто-вращение" />
+                <Switch x:Name="AutoRotate" Grid.Column="3" OnColor="#1A8C35" ThumbColor="#26FF59" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
